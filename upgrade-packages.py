@@ -3,6 +3,9 @@ import os
 def actualizar_sistema():
     os.system("sudo apt update")
 
+def upgradear_sistema():
+    os.system("sudo apt upgrade")
+
 def listar_upgradeables():
     os.system("sudo apt list --upgradable")
 
@@ -12,8 +15,9 @@ def upgradear_paquete(paquete):
 def main():
     while True:
         print("\n1. Actualizar sistema")
-        print("2. Listar paquetes upgradeables")
-        print("3. Upgradear paquete")
+        print("2. Upgradear sistema")
+        print("3. Listar paquetes upgradeables")
+        print("4. Upgradear paquete")
         print("0. Salir")
 
         opcion = input("\nSelecciona una opción: ")
@@ -21,8 +25,10 @@ def main():
         if opcion == "1":
             actualizar_sistema()
         elif opcion == "2":
-            os.system("sudo apt list --upgradable")
+            upgradear_sistema()
         elif opcion == "3":
+            os.system("sudo apt list --upgradable")
+        elif opcion == "4":
             paquetes = os.popen("apt list --upgradable").readlines()[1:]
             
             if not paquetes:

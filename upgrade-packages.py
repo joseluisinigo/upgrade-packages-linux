@@ -21,17 +21,25 @@ def main():
         if opcion == "1":
             actualizar_sistema()
         elif opcion == "2":
-            listar_upgradeables()
+            os.system("sudo apt list --upgradable")
         elif opcion == "3":
-            listar_upgradeables()
-            paquete_numero = input("Selecciona el número del paquete a upgradear (0 para salir): ")
+            paquetes = os.popen("apt list --upgradable").readlines()[1:]
+            
+            if not paquetes:
+                print("No hay paquetes upgradeables.")
+                continue
+
+            print("\nPaquetes upgradeables:")
+            for i, linea in enumerate(paquetes, start=1):
+                print(f"{i}. {linea.strip()}")
+
+            paquete_numero = input("\nSelecciona el número del paquete a upgradear (0 para salir): ")
 
             if paquete_numero == "0":
                 continue
 
             try:
                 paquete_numero = int(paquete_numero)
-                paquetes = os.popen("apt list --upgradable").readlines()[1:]
                 paquete_seleccionado = paquetes[paquete_numero - 1].split()[0]
                 upgradear_paquete(paquete_seleccionado)
                 print(f"Paquete {paquete_seleccionado} upgradedo exitosamente.")

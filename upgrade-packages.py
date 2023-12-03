@@ -33,18 +33,25 @@ def main():
             for i, linea in enumerate(paquetes, start=1):
                 print(f"{i}. {linea.strip()}")
 
-            paquete_numero = input("\nSelecciona el número del paquete a upgradear (0 para salir): ")
+            while True:
+                paquete_numero = input("\nSelecciona el número del paquete a upgradear (0 para salir): ")
 
-            if paquete_numero == "0":
+                if paquete_numero.isdigit():
+                    paquete_numero = int(paquete_numero)
+
+                    if 0 <= paquete_numero <= len(paquetes):
+                        break
+                    else:
+                        print("Número fuera de rango. Introduce un número válido.")
+                else:
+                    print("Introduce un número válido.")
+
+            if paquete_numero == 0:
                 continue
 
-            try:
-                paquete_numero = int(paquete_numero)
-                paquete_seleccionado = paquetes[paquete_numero - 1].split()[0]
-                upgradear_paquete(paquete_seleccionado)
-                print(f"Paquete {paquete_seleccionado} upgradedo exitosamente.")
-            except (ValueError, IndexError):
-                print("Opción no válida. Introduce un número válido.")
+            paquete_seleccionado = paquetes[paquete_numero - 1].split()[0]
+            upgradear_paquete(paquete_seleccionado)
+            print(f"Paquete {paquete_seleccionado} upgradedo exitosamente.")
         elif opcion == "0":
             break
         else:
